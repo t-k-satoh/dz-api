@@ -1,0 +1,12 @@
+{
+  "name": "dz_api",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/t-k-satoh/dz-api.git",
+  "author": "t-k-satoh <syakuyanaoto@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
