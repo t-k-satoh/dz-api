@@ -1,14 +1,6 @@
 import express from 'express'
+const PORT = process.env.PORT || 5000
 
-const app = express();
-const port = 8080; // default port to listen
-
-// define a route handler for the default home page
-app.get( "/", ( req, res ) => {
-    res.send( "Hello world!" );
-} );
-
-// start the Express server
-app.listen( port, () => {
-    console.log( `server started at http://localhost:${ port }` );
-} );
+express()
+  .get('/', (_req, res) => res.json({method: "こんにちは、getさん"}))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))

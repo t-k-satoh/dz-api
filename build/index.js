@@ -4,13 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const app = express_1.default();
-const port = 8080; // default port to listen
-// define a route handler for the default home page
-app.get("/", (req, res) => {
-    res.send("Hello world!");
-});
-// start the Express server
-app.listen(port, () => {
-    console.log(`server started at http://localhost:${port}`);
-});
+const PORT = process.env.PORT || 5000;
+express_1.default()
+    .get('/', (_req, res) => res.json({ method: "こんにちは、getさん" }))
+    .listen(PORT, () => console.log(`Listening on ${PORT}`));
