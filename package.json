@@ -12,6 +12,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ."
+    "start": "node index.js"
   }
 }
