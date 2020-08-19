@@ -13,3 +13,4 @@
 /_templates/
 /_skeleton/
 *.d.ts
+index.js
