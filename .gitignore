@@ -11,4 +11,4 @@ yarn-error.log*
 # Editor
 .idea/
 # Build File
-index.js
+build
