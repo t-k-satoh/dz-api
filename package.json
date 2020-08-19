@@ -6,10 +6,9 @@
   "author": "t-k-satoh <syakuyanaoto@gmail.com>",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc -w",
+    "dev": "nodemon -x ts-node src/index.ts",
     "sort": "sort-package-json",
-    "start": "node build/index"
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "@types/debug": "^4.1.5",
@@ -23,8 +22,10 @@
     "http": "^0.0.1-security",
     "http-errors": "^1.8.0",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-auth0": "^1.3.3",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
   "devDependencies": {
