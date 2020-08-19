@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "sort": "sort-package-json"
+    "sort": "sort-package-json",
+    "start": "node build/index"
   },
   "dependencies": {
     "@types/debug": "^4.1.5",
