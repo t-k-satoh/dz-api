@@ -42,7 +42,9 @@ const config = {
     saveUninitialized: true,
 };
 
-if (app.get('env') === 'production') {
+if (app.get('env') === 'production' || process.env.NODE_ENV === 'production') {
+    console.log('本番環境');
+    app.set('trust proxy', 1);
     config.cookie.secure = true;
 }
 
