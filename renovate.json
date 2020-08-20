@@ -2,10 +2,5 @@
   "extends": [
     "config:base"
   ],
-  "packageRules": [
-    {
-      "packageNames": [""],
-      "rangeStrategy": "pin"
-    }
-  ]
+  "rangeStrategy": "pin"
 }
