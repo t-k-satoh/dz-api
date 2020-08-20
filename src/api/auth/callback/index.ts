@@ -1,6 +1,7 @@
 import Auth0Strategy from 'passport-auth0';
 import { newPassport } from '../../../app/passport';
 import { router } from '../../../app/router';
+import { PATH as USER_PATH } from '../../user/get/constants';
 import { STRATEGY } from '../constants';
 import { PATH as LOGIN_PATH } from '../login/constants';
 import { PATH } from './constants';
@@ -22,7 +23,7 @@ export const callbackRouter = router.get(PATH, (req, res, next) => {
 
             const returnTo = req.session.returnTo;
             delete req.session.returnTo;
-            res.redirect(returnTo || '/user');
+            res.redirect(returnTo || USER_PATH);
         });
     })(req, res, next);
 });

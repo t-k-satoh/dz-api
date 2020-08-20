@@ -1,3 +1,4 @@
+import status from 'http-status';
 import { routers } from '../api';
 import { app } from './app';
 
@@ -7,16 +8,14 @@ routers.forEach((router) => {
     newApp.use('/', router);
 });
 
-newApp.use('/', (req, res) => {
-    if (typeof req.user === 'undefined') {
-        res.status(401);
-        res.send('fail');
-        return;
-    }
+newApp.use('/', (_req, res) => {
+    console.log('ないよ！');
+    res.status(status.NOT_FOUND).send(status[404]);
+});
 
-    const userProfile = req.user;
-
-    res.send(JSON.stringify(userProfile));
+newApp.get('/products', function (req, res) {
+    console.log(req.params);
+    res.send(req.params);
 });
 
 newApp.use((_req, _res, next) => {
