@@ -1,6 +1,6 @@
 import http from 'http';
 import debug from 'debug';
-import { app } from './app';
+import { newApp } from './app';
 
 const normalizePort = (val: string) => {
     const port = parseInt(val, 10);
@@ -20,7 +20,7 @@ const normalizePort = (val: string) => {
 
 const port = normalizePort(process.env.PORT || '3000');
 
-const server = http.createServer(app);
+const server = http.createServer(newApp);
 
 server.listen(port);
 
