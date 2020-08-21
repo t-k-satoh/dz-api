@@ -1,0 +1,28 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.0.0
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - restore_cache:
+          name: Yarn パッケージキャッシュを復元
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: 依存関係をインストール
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Yarn パッケージキャッシュを保存
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: テストを実行
+          command: yarn test
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
