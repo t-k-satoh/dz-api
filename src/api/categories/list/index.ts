@@ -6,16 +6,19 @@ import { Category } from '../types';
 import { PATH } from './constants';
 
 export const list = router.get(PATH, secured(), async (_req, res) => {
-    const sql = `SELECT * FROM categories`;
+    const sql = `SELECT * FROM public.categories`;
 
     try {
-        const categories = await connectDataBase<Category[]>({ sql });
-        const page = {
-            total_count: categories.length,
-        };
+        const { rows, rowCount } = await connectDataBase<Category[]>(sql);
 
-        res.status(status.OK).json({ categories, page });
+        res.status(status.OK).json({
+            categories: rows,
+            page: {
+                total_count: rowCount,
+            },
+        });
     } catch (error) {
+        console.log(error);
         res.status(status.BAD_REQUEST).send(status[400]);
     }
 });

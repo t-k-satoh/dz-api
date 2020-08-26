@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import { Response, NextFunction, Request } from 'express';
 import status from 'http-status';
-import mysql from 'mysql';
+import { Pool, QueryResult } from 'pg';
 
 dotenv.config();
 
@@ -21,28 +21,31 @@ export const secured = <Params>() => (
     res.status(status.UNAUTHORIZED).send(status[401]);
 };
 
-export const connectDataBase = <Results>(query: mysql.QueryOptions): Promise<Results> => {
+export const connectDataBase = <Results>(queryTextOrConfig: string): Promise<QueryResult<Results>> => {
     return new Promise((resolve, reject) => {
-        mysql
-            .createPool({
-                host: process.env.DB_HOST_NAME,
-                user: process.env.DB_USER_NAME,
-                password: process.env.DB_PASSWORD,
-                database: process.env.DB_NAME,
-            })
-            .getConnection((err, connection) => {
-                if (err) {
-                    return reject(err);
-                }
-                connection.query(query, (error, results) => {
-                    connection.release();
+        const pool = new Pool({
+            user: process.env.DB_USER_NAME,
+            host: process.env.DB_HOST_NAME,
+            database: process.env.DB_NAME,
+            password: process.env.DB_PASSWORD,
+            port: Number(process.env.DB_PORT),
+            ssl: {
+                rejectUnauthorized: false,
+            },
+        });
 
-                    if (error) {
-                        return reject(error);
-                    }
+        pool.connect((error) => {
+            if (error) {
+                return reject(error);
+            }
+        });
 
-                    return resolve(results);
-                });
-            });
+        pool.query(queryTextOrConfig, (error, res) => {
+            if (error) {
+                return reject(error);
+            }
+
+            return resolve(res);
+        });
     });
 };
