@@ -58,13 +58,47 @@ export const sqlRetrieve = ({
     searchPrams: string;
 }): string => `SELECT * FROM public.${table} WHERE ${column} = '${searchPrams}'`;
 
-export const sqlCreate = ({ table, params }: { table: string; params: { [key: string]: string } }): string => {
+export const sqlCreate = ({
+    table,
+    params,
+}: {
+    table: string;
+    params: { [key: string]: string | number | boolean };
+}): string => {
     const keys = Object.keys(params).join(', ');
     const values = Object.values(params)
         .map((params) => `'${params}'`)
         .join(', ');
 
     return `INSERT INTO public.${table} (${keys}) VALUES (${values});`;
+};
+
+export const sqlReplace = ({
+    table,
+    column,
+    params,
+    searchPrams,
+}: {
+    table: string;
+    column: string;
+    params: { [key: string]: string | number | boolean | undefined };
+    searchPrams: string;
+}): string => {
+    const properties = Object.entries(params)
+        .filter((entry) => typeof entry[1] !== 'undefined')
+        .map((entry) => {
+            const key = entry[0];
+            const value = entry[1];
+
+            if (typeof value === 'string') {
+                return `${key} = '${value}'`;
+            }
+
+            return `${key} = ${value}`;
+        })
+        .join(', ');
+
+    return `UPDATE public.${table} SET ${properties} WHERE ${column} = '${searchPrams}';`;
 };
 
 export const sqlDelete = ({

@@ -4,6 +4,7 @@ export type Category = {
     nick_name: string;
     created_at: string;
     updated_at: string;
+    product: boolean;
 };
 
 export type Result = {
