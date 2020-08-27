@@ -1,12 +1,14 @@
 import status from 'http-status';
 import { router } from '../../../app/router';
-import { secured } from '../../utils';
+import { ExpressPrams } from '../../types';
+import { secured, sqlRetrieve } from '../../utils';
 import { connectDataBase } from '../../utils';
+import { TABLE_NAME, ID_NAME } from '../constants';
 import { Category } from '../types';
 import { PATH } from './constants';
 
-export const retrieve = router.get(PATH, secured<{ id: string }>(), async (req, res) => {
-    const sql = `SELECT * FROM public.categories WHERE category_id = '${req.params.id}'`;
+export const retrieve = router.get<ExpressPrams<{ id: string }>>(PATH, secured(), async (req, res) => {
+    const sql = sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id });
 
     try {
         const { rows } = await connectDataBase<Category[]>(sql);

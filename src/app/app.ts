@@ -1,4 +1,5 @@
 import path from 'path';
+import bodyParser from 'body-parser';
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
@@ -13,6 +14,12 @@ export const app = express();
 
 app.use(logger('dev'));
 app.use(cookieParser());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 const options: Omit<session.SessionOptions, 'cookie'> = {
     secret: process.env.SESSION_SECRET ?? '',

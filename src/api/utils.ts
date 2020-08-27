@@ -5,11 +5,7 @@ import { Pool, QueryResult } from 'pg';
 
 dotenv.config();
 
-export const secured = <Params>() => (
-    req: Request<{ originalUrl: string } & Params>,
-    res: Response,
-    next: NextFunction,
-): void => {
+export const secured = () => (req: Request<{ originalUrl: string }>, res: Response, next: NextFunction): void => {
     if (req.user) {
         return next();
     }
@@ -49,3 +45,34 @@ export const connectDataBase = <Results>(queryTextOrConfig: string): Promise<Que
         });
     });
 };
+
+export const sqlList = ({ table }: { table: string }): string => `SELECT * FROM public.${table}`;
+
+export const sqlRetrieve = ({
+    table,
+    column,
+    searchPrams,
+}: {
+    table: string;
+    column: string;
+    searchPrams: string;
+}): string => `SELECT * FROM public.${table} WHERE ${column} = '${searchPrams}'`;
+
+export const sqlCreate = ({ table, params }: { table: string; params: { [key: string]: string } }): string => {
+    const keys = Object.keys(params).join(', ');
+    const values = Object.values(params)
+        .map((params) => `'${params}'`)
+        .join(', ');
+
+    return `INSERT INTO public.${table} (${keys}) VALUES (${values});`;
+};
+
+export const sqlDelete = ({
+    table,
+    column,
+    searchPrams,
+}: {
+    table: string;
+    column: string;
+    searchPrams: string;
+}): string => `DELETE FROM public.${table} WHERE ${column} IN ('${searchPrams}');`;
