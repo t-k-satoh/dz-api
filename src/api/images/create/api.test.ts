@@ -1,5 +1,3 @@
-import fs from 'fs';
-import { format } from 'date-fns';
 import dotenv from 'dotenv';
 import request from 'supertest';
 import { mockApp } from '../../test-utils';
@@ -10,8 +8,10 @@ dotenv.config();
 
 describe(__filename, () => {
     test('疎通確認', async () => {
-        const txtFile = '/Users/Satoh/project/dz_api/__mock__/IMG_3205.JPG';
+        const testData: ReqBody = {
+            file_path: `${__dirname}/test/test.jpg`,
+        };
 
-        console.log(new Blob());
+        await request(mockApp.use('/', create)).post(PATH).send(testData);
     });
 });
