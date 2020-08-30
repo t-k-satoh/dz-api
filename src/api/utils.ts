@@ -63,10 +63,11 @@ export const sqlCreate = ({
     params,
 }: {
     table: string;
-    params: { [key: string]: string | number | boolean };
+    params: { [key: string]: string | number | boolean | undefined };
 }): string => {
     const keys = Object.keys(params).join(', ');
     const values = Object.values(params)
+        .map((params) => (typeof params === 'undefined' ? null : params))
         .map((params) => `'${params}'`)
         .join(', ');
 
