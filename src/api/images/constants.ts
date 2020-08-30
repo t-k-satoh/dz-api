@@ -1,2 +1,2 @@
-export const TABLE_NAME = 'categories';
-export const ID_NAME = 'category_id';
+export const TABLE_NAME = 'images';
+export const ID_NAME = 'image_id';

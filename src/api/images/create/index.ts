@@ -1,38 +1,58 @@
-import fs from 'fs';
 import bodyParser from 'body-parser';
-import status from 'http-status';
 import { format } from 'date-fns';
 import dotenv from 'dotenv';
+import status from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
 import { connectDataBase, sqlCreate, sqlRetrieve, secured } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
+import { Image } from '../types';
 import { connectedAWS, createPutObject } from '../utils';
 import { PATH } from './constants';
 
 dotenv.config();
 
 export type ReqBody = {
-    file_path: string;
+    file: File;
+    product: boolean;
 };
 
-export const create = router.post<ExpressPrams<null>, string, ReqBody>(
+export const create = router.post<ExpressPrams<null>, Image[] | string, ReqBody>(
     PATH,
     secured(),
     bodyParser.json(),
     async (req, res) => {
-        const time = format(new Date(), 'yyyyMMddHHmmss');
-        const buffer = fs.readFileSync(req.body.file_path);
-        const splitPath = req.body.file_path.split('/');
-        const fileName = splitPath[splitPath.length - 1];
+        try {
+            const time = format(new Date(), 'yyyyMMddHHmmss');
+            const { name } = req.body.file;
 
-        const params = createPutObject(`${uuidv4()}_${time}_${fileName}`, buffer);
+            const objectParams = createPutObject(`${uuidv4()}_${time}_${name}`, req.body.file);
+            const resForAWS = await connectedAWS.upload(objectParams).promise();
 
-        const resForAWS = await connectedAWS.upload(params).promise();
+            const image_id = uuidv4();
 
-        console.log(resForAWS.Location);
+            const params = {
+                image_id,
+                name,
+                url: resForAWS.Location,
+                product: req.body.product,
+            };
 
-        res.status(status.OK).json('ok');
+            const sql = sqlCreate({ table: TABLE_NAME, params });
+            await connectDataBase<Image[]>(sql);
+
+            const { rows } = await connectDataBase<Image[]>(
+                sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: image_id }),
+            );
+
+            if (rows.length === 0) {
+                res.status(status.BAD_REQUEST).send(status[400]);
+            }
+
+            res.status(status.OK).json(rows[0]);
+        } catch (error) {
+            res.status(status.BAD_REQUEST).send(status[400]);
+        }
     },
 );
