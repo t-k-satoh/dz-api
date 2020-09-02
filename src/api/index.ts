@@ -7,4 +7,13 @@ import { productsRouters } from './products';
 import { subCategoriesRouters } from './sub_categories';
 import { userRouters } from './user';
 
-export const routers = [...authRouters];
+export const routers = [
+    ...authRouters,
+    ...userRouters,
+    ...categoriesRouters,
+    ...imagesRouters,
+    ...imagesGroupRouters,
+    ...keyVisualsRouters,
+    ...productsRouters,
+    ...subCategoriesRouters,
+];

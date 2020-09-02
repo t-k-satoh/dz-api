@@ -4,9 +4,7 @@ import { app } from './app';
 
 export const newApp = app;
 
-routers.forEach((router) => {
-    newApp.use('/', router);
-});
+console.log(routers);
 
 newApp.use('/', (_req, res) => {
     res.status(status.NOT_FOUND).send(status[404]);
