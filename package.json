@@ -9,7 +9,8 @@
     "dev": "open http://localhost:3000 & nodemon -x ts-node src/index.ts",
     "sort": "sort-package-json",
     "start": "ts-node src/index.ts",
-    "test": "jest api --verbose",
+    "test": "jest utils --verbose",
+    "test:api": "jest api --verbose",
     "test:watch": "jest --verbose --watch --runInBand --detectOpenHandles"
   },
   "dependencies": {
