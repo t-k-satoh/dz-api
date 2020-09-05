@@ -1,0 +1,21 @@
+swagger: "2.0"
+info:
+  description: "API for DZ works."
+  version: "0.0.0"
+  title: "DZ API"
+host: "dz-api-express.herokuapp.com"
+basePath: "/api/v1"
+schemes:
+- "https"
+- "http"
+paths:
+  /login:
+      get:
+        tags:
+          - "Authn"
+        responses:
+          "405":
+            description: "Invalid input"
+externalDocs:
+  description: "GitHub"
+  url: "https://github.com/t-k-satoh/dz-api"

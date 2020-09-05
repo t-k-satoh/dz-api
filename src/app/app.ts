@@ -2,6 +2,7 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
@@ -14,6 +15,9 @@ export const app = express();
 
 app.use(logger('dev'));
 app.use(cookieParser());
+
+// Enable All CORS Requests
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -69,3 +73,5 @@ app.use((req, _res, next) => {
     }
     next();
 });
+
+app.use('/doc', express.static('public'));
