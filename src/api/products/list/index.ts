@@ -1,13 +1,12 @@
 import status from 'http-status';
 import { router } from '../../../app/router';
-import { secured } from '../../utils';
 import { connectDataBase } from '../../utils';
 import { sqlList } from '../../utils';
 import { TABLE_NAME } from '../constants';
 import { PATH } from '../constants';
 import { Product } from '../types';
 
-export const list = router.get(PATH, secured(), async (_req, res) => {
+export const list = router.get(PATH, async (_req, res) => {
     const sql = sqlList({ table: TABLE_NAME });
 
     try {
