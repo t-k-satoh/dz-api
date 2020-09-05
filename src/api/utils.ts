@@ -6,7 +6,7 @@ import { Pool, QueryResult } from 'pg';
 dotenv.config();
 
 export const secured = () => (req: Request<{ originalUrl: string }>, res: Response, next: NextFunction): void => {
-    console.log(req);
+    console.log(req.user);
 
     if (req.user) {
         return next();
