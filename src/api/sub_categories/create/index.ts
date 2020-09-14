@@ -3,9 +3,7 @@ import status from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { secured } from '../../utils';
-import { connectDataBase } from '../../utils';
-import { sqlCreate, sqlRetrieve } from '../../utils';
+import { checkJwt, generateString, connectDataBase } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { PATH } from '../constants';
 import { SubCategory } from '../types';
@@ -14,7 +12,7 @@ export type ReqBody = Omit<SubCategory, 'sub_category_id' | 'created_at' | 'upda
 
 export const create = router.post<ExpressPrams<null>, SubCategory[] | string, ReqBody>(
     PATH,
-    secured(),
+    checkJwt,
     bodyParser.json(),
     async (req, res) => {
         const sub_category_id = uuidv4();
@@ -27,12 +25,12 @@ export const create = router.post<ExpressPrams<null>, SubCategory[] | string, Re
             product,
         };
 
-        const sql = sqlCreate({ table: TABLE_NAME, params });
+        const sql = generateString.create({ table: TABLE_NAME, params });
 
         try {
             await connectDataBase<SubCategory[]>(sql);
             const { rows } = await connectDataBase<SubCategory[]>(
-                sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: sub_category_id }),
+                generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: sub_category_id }),
             );
 
             if (rows.length === 0) {

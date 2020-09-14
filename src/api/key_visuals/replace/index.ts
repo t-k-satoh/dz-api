@@ -2,9 +2,7 @@ import bodyParser from 'body-parser';
 import status from 'http-status';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { secured } from '../../utils';
-import { connectDataBase } from '../../utils';
-import { sqlReplace, sqlRetrieve } from '../../utils';
+import { checkJwt, generateString, connectDataBase } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { RETRIEVE_PATH } from '../constants';
 import { KeyVisual } from '../types';
@@ -13,7 +11,7 @@ export type ReqBody = Partial<Omit<KeyVisual, 'key_visual_id' | 'created_at' | '
 
 export const replace = router.put<ExpressPrams<{ id: string }>, KeyVisual[] | string, ReqBody>(
     RETRIEVE_PATH,
-    secured(),
+    checkJwt,
     bodyParser.json(),
     async (req, res) => {
         const { name, caption, image_id, url, product } = req.body;
@@ -25,12 +23,12 @@ export const replace = router.put<ExpressPrams<{ id: string }>, KeyVisual[] | st
             product,
         };
 
-        const sql = sqlReplace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
+        const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
 
         try {
             await connectDataBase<KeyVisual[]>(sql);
             const { rows } = await connectDataBase<KeyVisual[]>(
-                sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id }),
+                generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id }),
             );
 
             if (rows.length === 0) {

@@ -2,9 +2,7 @@ import bodyParser from 'body-parser';
 import status from 'http-status';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { secured } from '../../utils';
-import { connectDataBase } from '../../utils';
-import { sqlReplace, sqlRetrieve } from '../../utils';
+import { checkJwt, generateString, connectDataBase } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { RETRIEVE_PATH } from '../constants';
 import { SubCategory } from '../types';
@@ -13,18 +11,18 @@ export type ReqBody = Partial<Omit<SubCategory, 'sub_category_id' | 'created_at'
 
 export const replace = router.put<ExpressPrams<{ id: string }>, SubCategory[] | string, ReqBody>(
     RETRIEVE_PATH,
-    secured(),
+    checkJwt,
     bodyParser.json(),
     async (req, res) => {
         const { name, category_id, nick_name, product } = req.body;
         const params = { name, category_id, nick_name, product };
 
-        const sql = sqlReplace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
+        const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
 
         try {
             await connectDataBase<SubCategory[]>(sql);
             const { rows } = await connectDataBase<SubCategory[]>(
-                sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id }),
+                generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id }),
             );
 
             if (rows.length === 0) {

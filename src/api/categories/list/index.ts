@@ -1,14 +1,12 @@
 import status from 'http-status';
 import { router } from '../../../app/router';
-import { secured, checkJwt } from '../../utils';
-import { connectDataBase } from '../../utils';
-import { sqlList } from '../../utils';
+import { connectDataBase, checkJwt, generateString } from '../../utils';
 import { TABLE_NAME } from '../constants';
 import { Category } from '../types';
 import { PATH } from './constants';
 
 export const list = router.get(PATH, checkJwt, async (_req, res) => {
-    const sql = sqlList({ table: TABLE_NAME });
+    const sql = generateString.list({ table: TABLE_NAME });
 
     try {
         const { rows, rowCount } = await connectDataBase<Category[]>(sql);

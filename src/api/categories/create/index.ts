@@ -3,9 +3,7 @@ import status from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { secured } from '../../utils';
-import { connectDataBase } from '../../utils';
-import { sqlCreate, sqlRetrieve } from '../../utils';
+import { connectDataBase, generateString, checkJwt } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { Category } from '../types';
 import { PATH } from './constants';
@@ -18,7 +16,7 @@ export type ReqBody = {
 
 export const create = router.post<ExpressPrams<null>, Category[] | string, ReqBody>(
     PATH,
-    secured(),
+    checkJwt,
     bodyParser.json(),
     async (req, res) => {
         const category_id = uuidv4();
@@ -30,12 +28,12 @@ export const create = router.post<ExpressPrams<null>, Category[] | string, ReqBo
             product: isProduct,
         };
 
-        const sql = sqlCreate({ table: TABLE_NAME, params });
+        const sql = generateString.create({ table: TABLE_NAME, params });
 
         try {
             await connectDataBase<Category[]>(sql);
             const { rows } = await connectDataBase<Category[]>(
-                sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: category_id }),
+                generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: category_id }),
             );
 
             if (rows.length === 0) {

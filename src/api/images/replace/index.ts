@@ -5,7 +5,7 @@ import status from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { connectDataBase, sqlReplace, sqlRetrieve, secured } from '../../utils';
+import { connectDataBase, generateString, checkJwt } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { Image } from '../types';
 import { connectedAWS, createPutObject } from '../utils';
@@ -20,7 +20,7 @@ export type ReqBody = {
 
 export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string, ReqBody>(
     PATH,
-    secured(),
+    checkJwt,
     bodyParser.json(),
     async (req, res) => {
         try {
@@ -36,7 +36,12 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string
                     url: resForAWS.Location,
                 };
 
-                const sql = sqlReplace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
+                const sql = generateString.replace({
+                    table: TABLE_NAME,
+                    column: ID_NAME,
+                    params,
+                    searchPrams: req.params.id,
+                });
 
                 await connectDataBase<Image[]>(sql);
             }
@@ -45,11 +50,16 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string
                 product: req.body.product,
             };
 
-            const sql = sqlReplace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
+            const sql = generateString.replace({
+                table: TABLE_NAME,
+                column: ID_NAME,
+                params,
+                searchPrams: req.params.id,
+            });
             await connectDataBase<Image[]>(sql);
 
             const { rows } = await connectDataBase<Image[]>(
-                sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id }),
+                generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id }),
             );
 
             if (rows.length === 0) {

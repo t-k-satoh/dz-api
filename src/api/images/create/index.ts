@@ -5,7 +5,7 @@ import status from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { connectDataBase, sqlCreate, sqlRetrieve, secured } from '../../utils';
+import { connectDataBase, generateString, checkJwt } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { Image } from '../types';
 import { connectedAWS, createPutObject } from '../utils';
@@ -20,7 +20,7 @@ export type ReqBody = {
 
 export const create = router.post<ExpressPrams<null>, Image[] | string, ReqBody>(
     PATH,
-    secured(),
+    checkJwt,
     bodyParser.json(),
     async (req, res) => {
         try {
@@ -39,11 +39,11 @@ export const create = router.post<ExpressPrams<null>, Image[] | string, ReqBody>
                 product: req.body.product,
             };
 
-            const sql = sqlCreate({ table: TABLE_NAME, params });
+            const sql = generateString.create({ table: TABLE_NAME, params });
             await connectDataBase<Image[]>(sql);
 
             const { rows } = await connectDataBase<Image[]>(
-                sqlRetrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: image_id }),
+                generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: image_id }),
             );
 
             if (rows.length === 0) {
