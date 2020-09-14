@@ -1397,9 +1397,10 @@ convert-source-map@^1.4.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   dependencies:
     safe-buffer "~5.1.1"
 
-cookie-parser@^1.4.5:
+cookie-parser@1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/cookie-parser/-/cookie-parser-1.4.5.tgz#3e572d4b7c0c80f9c61daf604e4336831b5d1d49"
+  integrity sha512-f13bPUj/gG/5mDr+xLmSxxDsB9DQiTIfhJS/sqjrmfAWiAN+x2O4i/XguTL9yDZ+/IFDanJ+5x7hC4CXT9Tdzw==
   dependencies:
     cookie "0.4.0"
     cookie-signature "1.0.6"
@@ -1424,9 +1425,10 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-cors@^2.8.5:
+cors@2.8.5:
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.5.tgz#eac11da51592dd86b9f06f6e7ac293b3df875d29"
+  integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
   dependencies:
     object-assign "^4"
     vary "^1"
@@ -1954,13 +1956,15 @@ expect@^26.4.2:
     jest-message-util "^26.3.0"
     jest-regex-util "^26.0.0"
 
-express-jwt-authz@^2.4.1:
+express-jwt-authz@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/express-jwt-authz/-/express-jwt-authz-2.4.1.tgz#405b303b3479ad3e862878ac0c08be191040c8e5"
+  integrity sha512-ruH86e2NvWicG9maStztyAyBJV0E8RsInXUm6Kuc/9pDtVJmJw3qigv1MEVs5bH+aksZuxocYZdz+N1V/9F+Dg==
 
-express-jwt@^6.0.0:
+express-jwt@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-6.0.0.tgz#20886c730983ffb1c706a4383235df86eff349b8"
+  integrity sha512-C26y9myRjx7CyhZ+BAT3p+gQyRCoDZ7qo8plCvLDaRT6je6ALIAQknT6XLVQGFKwIy/Ux7lvM2MNap5dt0T7gA==
   dependencies:
     async "^1.5.0"
     express-unless "^0.3.0"
@@ -3274,9 +3278,10 @@ jwa@^1.4.1:
     ecdsa-sig-formatter "1.0.11"
     safe-buffer "^5.0.1"
 
-jwks-rsa@^1.9.0:
+jwks-rsa@1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/jwks-rsa/-/jwks-rsa-1.9.0.tgz#efa0cd550c13b70397e27cd8764bd53c45a1ad91"
+  integrity sha512-UPCfQQg0s2kF2Ju6UFJrQH73f7MaVN/hKBnYBYOp+X9KN4y6TLChhLtaXS5nRKbZqshwVdrZ9OY63m/Q9CLqcg==
   dependencies:
     "@types/express-jwt" "0.0.42"
     axios "^0.19.2"
