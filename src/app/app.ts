@@ -16,8 +16,8 @@ export const app = express();
 app.use(logger('dev'));
 app.use(cookieParser());
 
-// Enable All CORS Requests
-app.use(cors());
+// Enable ORIGIN CORS Requests
+app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
