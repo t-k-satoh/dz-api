@@ -1,4 +1,3 @@
-import { authRouters } from './auth';
 import { categoriesRouters } from './categories';
 import { imagesRouters } from './images';
 import { imagesGroupRouters } from './images_group';
@@ -8,7 +7,6 @@ import { subCategoriesRouters } from './sub_categories';
 import { userRouters } from './user';
 
 export const routers = [
-    ...authRouters,
     ...userRouters,
     ...categoriesRouters,
     ...imagesRouters,
