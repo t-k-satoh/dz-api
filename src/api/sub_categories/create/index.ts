@@ -29,8 +29,6 @@ export const create = router.post<ExpressPrams<null>, SubCategory[] | string, Re
 
         const sql = sqlCreate({ table: TABLE_NAME, params });
 
-        console.log(sql);
-
         try {
             await connectDataBase<SubCategory[]>(sql);
             const { rows } = await connectDataBase<SubCategory[]>(

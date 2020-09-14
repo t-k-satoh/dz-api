@@ -19,8 +19,6 @@ describe(__filename, () => {
         expect('images' in body).toBe(true);
         expect('page' in body).toBe(true);
 
-        console.log(body);
-
         expect(header['content-type']).toBe('application/json; charset=utf-8');
         expect(header['x-powered-by']).toBe('Express');
     });
