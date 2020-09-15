@@ -17,7 +17,13 @@ app.use(logger('dev'));
 app.use(cookieParser());
 
 // Enable ORIGIN CORS Requests
-app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
+app.use(
+    cors({
+        credentials: true,
+        origin: process.env.ORIGIN,
+        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+    }),
+);
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
