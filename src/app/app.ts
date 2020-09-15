@@ -40,13 +40,16 @@ const options: Omit<session.SessionOptions, 'cookie'> = {
 const isProduct = app.get('env') === 'production' || process.env.NODE_ENV === 'production';
 
 if (isProduct) {
+    console.log('Product');
     app.set('trust proxy', 1);
 
     app.use(
         session({
             ...options,
+            proxy: true,
             cookie: {
                 secure: true,
+                maxAge: 5184000000,
             },
         }),
     );
