@@ -14,16 +14,4 @@ export const checkJwt = jwt({
     audience: process.env.AUTH0_AUDIENCE,
     issuer: process.env.ISSUER,
     algorithms: ['RS256'],
-    getToken: (req) => {
-        console.log(req.cookies);
-
-        const cookies: Record<string, string> = req.cookies;
-        const target = cookies[process.env.COOKIE_KEY ?? ''];
-
-        if (typeof target === 'undefined') {
-            return req.headers.authorization?.split(' ')[1];
-        }
-
-        return target;
-    },
 });
