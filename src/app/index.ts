@@ -1,3 +1,4 @@
+import cors from 'cors';
 import status from 'http-status';
 import { routers } from '../api';
 import { app } from './app';
@@ -6,6 +7,7 @@ export const newApp = app;
 
 routers.forEach((router) => {
     newApp.use('/', router);
+    router.all('*', cors());
 });
 
 newApp.use('/', (_req, res) => {
