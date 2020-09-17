@@ -21,7 +21,7 @@ app.use(
     cors({
         credentials: true,
         origin: process.env.ORIGIN,
-        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'authorization'],
     }),
 );
 
