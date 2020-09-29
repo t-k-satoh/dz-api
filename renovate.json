@@ -2,7 +2,7 @@
   "extends": [
     "config:base"
   ],
-  "assignees": ["tk-sato"],
+  "assignees": ["t-k-satoh"],
   "baseBranches": ["develop"],
   "timezone": "Asia/Tokyo",
   "schedule": ["before 2am"],
