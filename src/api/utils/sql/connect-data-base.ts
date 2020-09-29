@@ -27,6 +27,7 @@ export const connectDataBase = <Results>(queryTextOrConfig: string): Promise<Que
                 return reject(error);
             }
 
+            pool.end();
             return resolve(res);
         });
     });
