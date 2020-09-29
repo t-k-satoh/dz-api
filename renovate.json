@@ -2,13 +2,19 @@
   "extends": [
     "config:base"
   ],
+  "assignees": ["tk-sato"],
+  "baseBranches": ["develop"],
   "timezone": "Asia/Tokyo",
   "schedule": ["before 2am"],
   "rangeStrategy": "pin",
-  "packageRules": [
-    {
-      "updateTypes": ["patch", "pin", "digest"],
-      "automerge": true
-    }
-  ]
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "minor": {
+    "automerge": false
+  },
+  "patch": {
+    "automerge": true
+  }
 }
