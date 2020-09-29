@@ -11,7 +11,7 @@ import { PATH } from './constants';
 export type ReqBody = {
     name: string;
     nick_name: string;
-    isProduct: boolean;
+    product: boolean;
 };
 
 export const create = router.post<ExpressPrams<null>, Category[] | string, ReqBody>(
@@ -20,12 +20,12 @@ export const create = router.post<ExpressPrams<null>, Category[] | string, ReqBo
     bodyParser.json(),
     async (req, res) => {
         const category_id = uuidv4();
-        const { name, nick_name, isProduct } = req.body;
+        const { name, nick_name, product } = req.body;
         const params = {
             category_id,
             name,
             nick_name,
-            product: isProduct,
+            product,
         };
 
         const sql = generateString.create({ table: TABLE_NAME, params });

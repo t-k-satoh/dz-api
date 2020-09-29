@@ -10,7 +10,7 @@ import { PATH } from './constants';
 export type ReqBody = {
     name?: string;
     nick_name?: string;
-    isProduct?: boolean;
+    product?: boolean;
 };
 
 export const replace = router.put<ExpressPrams<{ id: string }>, Category[] | string, ReqBody>(
@@ -18,11 +18,11 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Category[] | str
     checkJwt,
     bodyParser.json(),
     async (req, res) => {
-        const { name, nick_name, isProduct } = req.body;
+        const { name, nick_name, product } = req.body;
         const params = {
             name,
             nick_name,
-            product: isProduct,
+            product,
         };
 
         const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });

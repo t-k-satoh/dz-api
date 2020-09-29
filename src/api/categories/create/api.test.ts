@@ -14,7 +14,7 @@ describe(__filename, () => {
         const testData: ReqBody = {
             name: `test created by ${format(new Date(), 'yyyy-MM-dd-HH-mm-ss')}`,
             nick_name: `created for ${process.env.CREATED}`,
-            isProduct: false,
+            product: false,
         };
 
         const response = await request(mockApp.use('/', create)).post(PATH).send(testData);
@@ -37,7 +37,7 @@ describe(__filename, () => {
 
         expect(body.name).toBe(testData.name);
         expect(body.nick_name).toBe(testData.nick_name);
-        expect(body.product).toBe(testData.isProduct);
+        expect(body.product).toBe(testData.product);
 
         const header = response.header;
 

@@ -16,7 +16,7 @@ describe(__filename, () => {
         const testData: CreateReqBody = {
             name: `test created by ${format(new Date(), 'yyyy-MM-dd-HH-mm-ss')}`,
             nick_name: `created for ${process.env.CREATED}`,
-            isProduct: false,
+            product: false,
         };
 
         const createResponse = await request(mockApp.use('/', create)).post(CREATE_PATH).send(testData);
@@ -25,7 +25,7 @@ describe(__filename, () => {
         const replaceData: ReqBody = {
             name: `test replace by ${format(new Date(), 'yyyy-MM-dd-HH-mm-ss')}`,
             nick_name: `replace for ${process.env.CREATED}`,
-            isProduct: false,
+            product: false,
         };
 
         const response = await request(mockApp.use('/', replace))
@@ -50,7 +50,7 @@ describe(__filename, () => {
 
         expect(body.name).toBe(replaceData.name);
         expect(body.nick_name).toBe(replaceData.nick_name);
-        expect(body.product).toBe(replaceData.isProduct);
+        expect(body.product).toBe(replaceData.product);
 
         const header = response.header;
 
