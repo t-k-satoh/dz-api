@@ -1,2 +1,2 @@
 export { checkJwt } from './jwt';
-export { connectDataBase, generateString } from './sql';
+export { connectDataBase, pool, generateString } from './sql';
