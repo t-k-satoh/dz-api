@@ -3,7 +3,7 @@ import status from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { pool, generateString, checkJwt } from '../../utils';
+import { generateString, checkJwt, postgres } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { Category } from '../types';
 import { PATH } from './constants';
@@ -19,6 +19,8 @@ export const create = router.post<ExpressPrams<null>, Category[] | string, ReqBo
     checkJwt,
     bodyParser.json(),
     async (req, res) => {
+        const client = postgres.generateClient();
+
         const category_id = uuidv4();
         const { name, nick_name, product } = req.body;
         const params = {
@@ -31,10 +33,13 @@ export const create = router.post<ExpressPrams<null>, Category[] | string, ReqBo
         const sql = generateString.create({ table: TABLE_NAME, params });
 
         try {
-            await pool.query<Category[]>(sql);
-            const { rows } = await pool.query<Category[]>(
-                generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: category_id }),
-            );
+            await client.connect();
+
+            await client.query(sql);
+
+            const retrieve = generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: category_id });
+
+            const { rows } = await client.query<Category[]>(retrieve);
 
             if (rows.length === 0) {
                 res.status(status.BAD_REQUEST).send(status[400]);
@@ -44,7 +49,7 @@ export const create = router.post<ExpressPrams<null>, Category[] | string, ReqBo
         } catch (error) {
             res.status(status.BAD_REQUEST).send(status[400]);
         } finally {
-            await pool.end();
+            await client.end();
         }
     },
 );
