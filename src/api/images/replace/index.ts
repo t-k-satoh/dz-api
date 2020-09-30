@@ -5,7 +5,7 @@ import status from 'http-status';
 import { v4 as uuidv4 } from 'uuid';
 import { router } from '../../../app/router';
 import { ExpressPrams } from '../../types';
-import { connectDataBase, generateString, checkJwt } from '../../utils';
+import { postgres, generateString, checkJwt } from '../../utils';
 import { TABLE_NAME, ID_NAME } from '../constants';
 import { Image } from '../types';
 import { connectedAWS, createPutObject } from '../utils';
@@ -23,7 +23,10 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string
     checkJwt,
     bodyParser.json(),
     async (req, res) => {
+        const client = postgres.generateClient();
+
         try {
+            await client.connect();
             const time = format(new Date(), 'yyyyMMddHHmmss');
 
             if (typeof req.body.file !== 'undefined') {
@@ -42,8 +45,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string
                     params,
                     searchPrams: req.params.id,
                 });
-
-                await connectDataBase<Image[]>(sql);
+                await client.query<Image[]>(sql);
             }
 
             const params = {
@@ -56,9 +58,9 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string
                 params,
                 searchPrams: req.params.id,
             });
-            await connectDataBase<Image[]>(sql);
+            await client.query<Image[]>(sql);
 
-            const { rows } = await connectDataBase<Image[]>(
+            const { rows } = await client.query<Image[]>(
                 generateString.retrieve({ table: TABLE_NAME, column: ID_NAME, searchPrams: req.params.id }),
             );
 
@@ -69,6 +71,8 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string
             res.status(status.OK).json(rows[0]);
         } catch (error) {
             res.status(status.BAD_REQUEST).send(status[400]);
+        } finally {
+            await client.end();
         }
     },
 );
