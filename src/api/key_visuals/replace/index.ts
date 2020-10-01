@@ -22,6 +22,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, KeyVisual[] | st
             image_id,
             url,
             product,
+            updated_at: new Date().toISOString(),
         };
 
         const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });

@@ -25,6 +25,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Category[] | str
             name,
             nick_name,
             product,
+            updated_at: new Date().toISOString(),
         };
 
         const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
@@ -43,6 +44,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Category[] | str
 
             res.status(status.OK).json(rows[0]);
         } catch (error) {
+            console.log(error);
             res.status(status.BAD_REQUEST).send(status[400]);
         } finally {
             await client.end();

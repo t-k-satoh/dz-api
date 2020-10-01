@@ -19,6 +19,8 @@ export const create = router.post<ExpressPrams<null>, Product[] | string, ReqBod
         const product_id = uuidv4();
         const params = {
             product_id,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
             ...req.body,
         };
 

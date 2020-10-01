@@ -30,6 +30,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, ImagesGroup[] | 
             image_id_3,
             description,
             product,
+            updated_at: new Date().toISOString(),
         };
 
         const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
