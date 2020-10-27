@@ -49,7 +49,7 @@
     "nodemon": "2.0.6",
     "passport": "0.4.1",
     "passport-auth0": "1.4.0",
-    "pg": "8.4.1",
+    "pg": "8.4.2",
     "prettier": "2.1.2",
     "pretty-format": "26.6.1",
     "sort-package-json": "1.46.1",
