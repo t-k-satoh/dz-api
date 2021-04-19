@@ -15,7 +15,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Product[] | stri
     bodyParser.json(),
     async (req, res) => {
         const client = postgres.generateClient();
-        const params = req.body;
+        const params = { updated_at: new Date().toISOString(), ...req.body };
 
         const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
 

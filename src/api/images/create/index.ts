@@ -40,6 +40,8 @@ export const create = router.post<ExpressPrams<null>, Image[] | string, ReqBody>
                 name,
                 url: resForAWS.Location,
                 product: req.body.product,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
             };
 
             const sql = generateString.create({ table: TABLE_NAME, params });

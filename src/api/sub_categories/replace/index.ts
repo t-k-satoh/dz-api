@@ -16,7 +16,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, SubCategory[] | 
     async (req, res) => {
         const client = postgres.generateClient();
         const { name, category_id, nick_name, product } = req.body;
-        const params = { name, category_id, nick_name, product };
+        const params = { name, category_id, nick_name, product, updated_at: new Date().toISOString() };
 
         const sql = generateString.replace({ table: TABLE_NAME, column: ID_NAME, params, searchPrams: req.params.id });
 

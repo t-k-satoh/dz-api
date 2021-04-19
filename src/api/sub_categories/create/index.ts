@@ -24,6 +24,8 @@ export const create = router.post<ExpressPrams<null>, SubCategory[] | string, Re
             category_id,
             nick_name,
             product,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
         };
 
         const sql = generateString.create({ table: TABLE_NAME, params });

@@ -36,6 +36,7 @@ export const replace = router.put<ExpressPrams<{ id: string }>, Image[] | string
 
                 const params = {
                     name,
+                    updated_at: new Date().toISOString(),
                     url: resForAWS.Location,
                 };
 
