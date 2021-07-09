@@ -703,9 +703,10 @@
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
 
-"@types/passport-auth0@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@types/passport-auth0/-/passport-auth0-1.0.4.tgz#f92c357a3a2a6fa5f10744555a45c5e9a6e36469"
+"@types/passport-auth0@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@types/passport-auth0/-/passport-auth0-1.0.5.tgz#e4f2a99c1e724ce574c9728fbe0fca35671185ef"
+  integrity sha512-7SI7NsTgDNB8mKa+D460GMFTAzGP5rbAI9iUqeV69RJx9bUkK2o5YuZ3n0NGYjrQ+x1VN+wYaGsj1WH8qVYj8w==
   dependencies:
     "@types/express" "*"
     "@types/passport" "*"
