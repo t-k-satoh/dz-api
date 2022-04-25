@@ -38,7 +38,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.4.1",
     "express": "4.17.1",
-    "express-jwt": "6.0.0",
+    "express-jwt": "6.1.2",
     "express-jwt-authz": "2.4.1",
     "express-session": "1.17.2",
     "http": "0.0.1-security",
